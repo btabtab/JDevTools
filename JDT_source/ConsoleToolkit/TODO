@@ -1,0 +1,33 @@
+#include "ConsoleDraw.h"
+/* Implement Layering:
+	The ability to have 2+ buffers render at once with the highest
+	being rendered last and all "Invisible" pixels being drawn
+	with the below layer's pixels instead.
+
+	Implement PLOTWrapper:
+	a header with wrapper functions:*/
+		setPlotBuffer(VBuffer* n_buffer);
+		plot(x, y);
+		setPlotColour(int colour);
+		setPlotCharacter(char character);
+		listPlottedPoints();
+
+/*Implement a parser that can take the commands:
+	command syntax key:
+	"$?" (a dollar sign followed by a letter): This refers to a new paremeter
+
+	"plot($x, $y)" - places a pixel at the target coords. /
+	"clear()" - erases the buffer contents. /
+	"flipImage($axis)" - flips the image along it's x or y axis./
+	"invertImage()" - turns all tiles into the opposite colour.
+	"setBrushColour($colour)" - sets the plot function colour.
+	"setCanvasColour($colour)" - sets the background colour.
+	"cursorToggle()" - shows the cursor
+	"moveCursor($x, $y)" - moves the cursor to the new pos.
+	"shiftCursor($x, $y)" - moves the cursor by the specified amount.
+	"insertText($text_to_insert)" - starts writing the text into the buffers pixels. only available if character rendering is enabled.
+	"clearText($amount_to_clear_behind_cursor)" - moves the cursor back and erases data in this pixels.
+	"save($file_name, $mode)" - saves the current buffer or output to a file on the disk.
+	"load($file_name, $mode)" - loads a file from disk that will be put into the buffer.
+	"exit()" - closes the application down.
+*/

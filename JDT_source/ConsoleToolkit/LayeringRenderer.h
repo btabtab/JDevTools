@@ -1,0 +1,3 @@
+#ifndef LAYERING_RENDERER_H
+#define LAYERING_RENDERER_H
+#endif

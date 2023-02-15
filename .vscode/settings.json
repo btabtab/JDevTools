@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "toolkitconsolecontrolpanel.h": "c",
+        "linkedlistdemo.h": "c",
+        "errorsniffing.h": "c",
+        "jcommandparser.h": "c"
+    }
+}
