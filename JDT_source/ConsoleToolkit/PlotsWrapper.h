@@ -2,6 +2,7 @@
 #define PLOTS_WRAPPER_H
 
 #include "ConsoleDraw.h"
+#include "Xiaolin_Wu_LineAlgorithm.h"
 
 VBuffer* getPlotsBuffer()
 {
@@ -51,7 +52,8 @@ void plotLine(int x_start, int y_start, int x_end, int y_end, bool redraw_buffer
 		setTextColour(RESET);
 		return;
 	}
-	drawLine_naiveAlgorithm(getPlotsBuffer(), (Point){x_start, y_start}, (Point){x_end, y_end}, *currentPixelData());
+	spXiaolinDraw(getPlotsBuffer(), x_start, y_start, x_end, y_end, (*currentPixelData()));
+	// drawLine_naiveAlgorithm(getPlotsBuffer(), (Point){x_start, y_start}, (Point){x_end, y_end}, *currentPixelData());
 	
 	if(redraw_buffer)
 	{

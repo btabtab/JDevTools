@@ -12,7 +12,7 @@
 
 void plotADV(VBuffer* buffer, float x, float y, PixelData pixel, float brightness)
 {
-	drawPixelToBufferFromPoint(buffer, newPixel(!pixel.screen_colour, pixel.character), (Point){x, y});
+	drawPixelToBufferFromPoint(buffer, newPixel(pixel.screen_colour, pixel.character), (Point){x, y});
 	// plot the pixel at (x, y) with brightness c (where 0 ≤ c ≤ 1);
 }
 
@@ -45,7 +45,7 @@ void swap(float* a, float* b)
 	(*b) = c;
 }
 
-void spXiaolinDraw(VBuffer* buffer, float x0,float y0,float x1,float y1)
+void spXiaolinDraw(VBuffer* buffer, float x0,float y0,float x1,float y1, PixelData pixel)
 {
 	bool steep = fabsf(y1 - y0) > fabs(x1 - x0);
 	
@@ -83,13 +83,13 @@ void spXiaolinDraw(VBuffer* buffer, float x0,float y0,float x1,float y1)
 
 	if(steep)
 	{
-		plotADV(buffer, ypxl1,   xpxl1, newPixel(rfpart(yend) * xgap, ' '), 0);
-		plotADV(buffer, ypxl1+1, xpxl1,  newPixel(fpart(yend) * xgap, ' '), 0);
+		plotADV(buffer, ypxl1,   xpxl1, pixel, 0);
+		plotADV(buffer, ypxl1+1, xpxl1,  pixel, 0);
 	}
 	else
 	{
-		plotADV(buffer, xpxl1, ypxl1  , newPixel(rfpart(yend) * xgap, ' '), 0);
-		plotADV(buffer, xpxl1, ypxl1+1,  newPixel(fpart(yend) * xgap, ' '), 0);
+		plotADV(buffer, xpxl1, ypxl1  , pixel, 0);
+		plotADV(buffer, xpxl1, ypxl1+1,  pixel, 0);
 	}
 	float intery = yend + gradient; // first y-intersection for the main loop
 	
@@ -101,13 +101,13 @@ void spXiaolinDraw(VBuffer* buffer, float x0,float y0,float x1,float y1)
 	float ypxl2 = ipart(yend);
 	if(steep)
 	{
-		plotADV(buffer, ypxl2  , xpxl2, newPixel(rfpart(yend) * xgap, ' '), 0);
-		plotADV(buffer, ypxl2+1, xpxl2,  newPixel(fpart(yend) * xgap, ' '), 0);
+		plotADV(buffer, ypxl2  , xpxl2, pixel, 0);
+		plotADV(buffer, ypxl2+1, xpxl2,  pixel, 0);
 	}
 	else
 	{
-		plotADV(buffer, xpxl2, ypxl2,  newPixel(rfpart(yend) * xgap, ' '), 0);
-		plotADV(buffer, xpxl2, ypxl2+1, newPixel(fpart(yend) * xgap, ' '), 0);
+		plotADV(buffer, xpxl2, ypxl2,  pixel, 0);
+		plotADV(buffer, xpxl2, ypxl2+1, pixel, 0);
 	}
 	
 	// main loop
@@ -115,8 +115,8 @@ void spXiaolinDraw(VBuffer* buffer, float x0,float y0,float x1,float y1)
 	{
 		for(int x = xpxl1 + 1; x != xpxl2 - 1; x++)
 		{
-			plotADV(buffer, ipart(intery)  , x, newPixel(rfpart(intery) * xgap, ' '), 0);
-			plotADV(buffer, ipart(intery)+1, x,  newPixel(fpart(intery) * xgap, ' '), 0);
+			plotADV(buffer, ipart(intery)  , x, pixel, 0);
+			plotADV(buffer, ipart(intery)+1, x,  pixel, 0);
 			intery = intery + gradient;
 		}
 	}
@@ -125,8 +125,8 @@ void spXiaolinDraw(VBuffer* buffer, float x0,float y0,float x1,float y1)
 		// for( x from xpxl1 + 1 to xpxl2 - 1 do)
 		for(int x = xpxl1 + 1; x != xpxl2 - 1; x++)
 		{
-			plotADV(buffer, x, ipart(intery),  newPixel(rfpart(intery) * xgap, ' '), 0);
-			plotADV(buffer, x, ipart(intery)+1, newPixel(fpart(intery) * xgap, ' '), 0);
+			plotADV(buffer, x, ipart(intery),  pixel, 0);
+			plotADV(buffer, x, ipart(intery)+1, pixel, 0);
 			intery = intery + gradient;
 		}
 	}

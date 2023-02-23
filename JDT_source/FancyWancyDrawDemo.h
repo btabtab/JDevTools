@@ -4,15 +4,12 @@
 #include "ConsoleToolkit/PlotsWrapper.h"
 #include "ConsoleToolkit/Xiaolin_Wu_LineAlgorithm.h"
 
+#include "ConsoleToolkit/ShapesDrawing.h"
+
 void fancyDrawingDemo()
 {
 	// printf("fancyDrawingDemo");
 	// writeStringIntoPlotGraph(1,1,"hello world!", false);
-
-	(*currentPixelData()) = newPixel(BLUE, '-');
-	spXiaolinDraw(getPlotsBuffer(), 0, 0, getPlotsBuffer()->width, 0);
-	spXiaolinDraw(getPlotsBuffer(), 0, 0, 0, getPlotsBuffer()->width);
-
 
 	for(int ix = 0, iy = getPlotsBuffer()->width - 1; ix != getPlotsBuffer()->width; ix++, iy--)
 	{
@@ -23,6 +20,22 @@ void fancyDrawingDemo()
 		}
 
 	}
+
+	(*currentPixelData()) = newPixel(BLUE, '-');
+	spXiaolinDraw(getPlotsBuffer(), 0, 0, getPlotsBuffer()->width, 0, (*currentPixelData()));
+	spXiaolinDraw(getPlotsBuffer(), 0, 0, 0, getPlotsBuffer()->width, (*currentPixelData()));
+
+	drawRectangle(newPoint(5, 6), newDimension(6, 8));
+
+	(*currentPixelData()) = newPixel(YELLOW, '-');
+	drawRectangle(newPoint(8, 9), newDimension(6, 8));
+
+	(*currentPixelData()) = newPixel(MAGENTA, '*');
+	drawStar(newPoint(22, 22));
+
+	(*currentPixelData()) = newPixel(GREEN, '@');
+	drawTriangle(newPoint(10, 20), newPoint(20, 20), newPoint(20, 10));
+
 	drawPlotsBuffer();
 }
 

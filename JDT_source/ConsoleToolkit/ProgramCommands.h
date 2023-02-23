@@ -184,7 +184,7 @@ void plotsCommands(ParseNipCommand* command)
 	}
 	if(!strcmp(command->instruction_name, "DL"))
 	{
-		spXiaolinDraw(getPlotsBuffer(), 0, 0, 30, 0);
+		spXiaolinDraw(getPlotsBuffer(), 0, 0, 30, 0, *currentPixelData());
 		drawPlotsBuffer();
 	}
 }

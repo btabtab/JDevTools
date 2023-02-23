@@ -85,7 +85,17 @@ typedef struct Point
 	int x;
 	int y;
 }
-Point;
+Point, Dimensions;
+
+Point newPoint(int x, int y)
+{
+	return (Point){x, y};
+}
+Dimensions newDimension(int width, int height)
+{
+	return (Dimensions){width, height};
+}
+
 int getClampedInt(int target, int min, int max)
 {
 	if(target 	< min	)
