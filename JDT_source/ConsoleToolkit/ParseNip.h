@@ -155,12 +155,13 @@ void grabTextFromPosToPos(char* text_buff, int start, int stop, char* copy_buffe
 void getStringBetweenChars(char* string, char* copy_to_buffer, char a, char b, int l_skip, int r_skip, int range_shift)
 {
 	char temp[40] = "";
-	int start = (getIndexOfCharacter(string, a, l_skip) + 1) + range_shift, finish = getIndexOfCharacter(string, b, r_skip) - range_shift;
+	int start = (getIndexOfCharacter(string, a, l_skip) + 1), finish = getIndexOfCharacter(string, b, r_skip);
 	for(int i = start; i != finish; i++)
 	{
 		// printf("getStringBetweenChars: string[%d]: <%c>\n", i, string[i]);
 		temp[i - start] = string[i];
 	}
+	temp[finish - start] = '\0';
 	sprintf(copy_to_buffer, "%s", temp);
 	// printf("string [%s] from between [%d] and [%d] from [%s]", copy_to_buffer, start_char, end_char, string);
 }
@@ -174,18 +175,20 @@ void getStringBetweenParenthesis(char* string, char* copy_to_buffer)
 //�
 void copyParameterXIntoBuffer(char* input, char* buffer, int x, int x_limit)
 {
+	sprintf(buffer, "");
 	// printf("input: %s\n", input);
 	//no params
 	if(!x_limit){return;}
 	//x is 0
-	if(!x)		{if(x_limit == 1){getStringBetweenChars(input, buffer, '{', '}', 0, 0, 0); return;}}
+	if(!x)		{if(x_limit == 1){getStringBetweenChars(input, buffer, '{', '}', 0, 0, 0); printf("!x > | %s |\n", buffer); return;}}
+	
 	//x is the last parameter
-	if(x_limit == x + 1){getStringBetweenChars(input, buffer, ',', '}', x - 1, 0, 0); return;}
+	if(x_limit == (x+1)){getStringBetweenChars(input, buffer, ',', '}', x - 1, 0, 0); printf("x_limit == x+1 > | %s |\n", buffer); return;}
 
-	if(x){getStringBetweenChars(input, buffer, ',', ',', x - 1, x, 0); return;}
+	if(x){getStringBetweenChars(input, buffer, ',', ',', x - 1, x, 0); printf("x > | %s |\n", buffer); return;}
 
 	//x is the first parameter
-	{getStringBetweenChars(input, buffer, '{', ',', 0, 0, 0); 		return;}
+	{getStringBetweenChars(input, buffer, '{', ',', 0, 0, 0); 		printf(" > | %s |\n", buffer); return;}
 	return;
 }
 //gets the Xth parameter (X = 'parameter_to_get') from command 'parsenip_command'.
@@ -194,9 +197,8 @@ void getParameterFromInput(ParseNipCommand* parsenip_command, int parameter_to_g
 	//This is a temporary buffer to store a text to break down the process of extracting parameters.
 	char temp[30] = "", copy_buff[30] = "";
 	getStringBetweenParenthesis(input, copy_buff);
+
 	// printf("copy buffer %s\n", copy_buff);
-	copyParameterXIntoBuffer(copy_buff, temp, parameter_to_get, parsenip_command->parameters_detected);
-	sprintf(parsenip_command->parameter_buffer[parameter_to_get], "%s", temp);
 	// setTextColour(BLUE);
 	// printf("copy_buff = { %s }\n", copy_buff);
 	// setTextColour(GREEN);

@@ -10,7 +10,7 @@ VBuffer* getPlotsBuffer()
 	static bool is_buffer_initialised = false;
 	if(!is_buffer_initialised)
 	{
-		initVbuffer(&buffer, VBUFFER_WIDTH);
+		initVbuffer(&buffer, 30);
 		is_buffer_initialised = true;
 	}
 
@@ -34,20 +34,29 @@ void drawPlotsBuffer()
 	// resetConsole(1);
 	drawBuffer(getPlotsBuffer(), true, true);
 }
-void plot(int x, int y)
+void plot(int x, int y, bool redraw)
 {
 	drawPixelToBufferFromPoint(getPlotsBuffer(), (*currentPixelData()), (Point){x, y});
-	drawPlotsBuffer();
+	if(redraw)
+	{
+		drawPlotsBuffer();
+	}
 }
-void plotLine(int x_start, int y_start, int x_end, int y_end)
+void plotLine(int x_start, int y_start, int x_end, int y_end, bool redraw_buffer)
 {
 	if(VBUFFER_WIDTH < x_start || VBUFFER_WIDTH < y_start || VBUFFER_WIDTH < x_end || VBUFFER_WIDTH < y_end)
 	{
-		printf("target is OOB");
+		setTextColour(RED);
+		printf("target is OOB\n");
+		setTextColour(RESET);
 		return;
 	}
 	drawLine_naiveAlgorithm(getPlotsBuffer(), (Point){x_start, y_start}, (Point){x_end, y_end}, *currentPixelData());
-	drawPlotsBuffer();
+	
+	if(redraw_buffer)
+	{
+		drawPlotsBuffer();
+	}
 }
 
 void writeStringIntoPlotGraph(int x, int y, char* string, bool redraw_graph)

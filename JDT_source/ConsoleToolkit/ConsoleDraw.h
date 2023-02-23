@@ -168,7 +168,7 @@ void drawBorderTop(bool draw_border, int buffer_width, bool lettered_top)
 	if(draw_border)
 	{
 		printf("\t");
-		drawPixel(newPixel(RESET, '/'));
+		printf("/");
 		if(lettered_top)
 		{
 			for(int i = 0; i != 2; i++)
@@ -177,8 +177,16 @@ void drawBorderTop(bool draw_border, int buffer_width, bool lettered_top)
 				{
 					char temp[3] = "";
 					sprintf(temp, "%02d", j);
-					drawPixel(newPixel(RESET, temp[i]));
+	
+					if(getTerminalSettings()->double_spaced_draw)
+					{
+						setScreenColour(BLUE + !!(j % 2));
+						printf(" ");
+						setScreenColour(RESET);
+					}
+					printf("%c", temp[i]);
 				}
+				setScreenColour(RESET);
 				char end_char[3] = {"\\|"};
 				printf("%c\n", end_char[i]);
 				if(!i)
@@ -189,13 +197,13 @@ void drawBorderTop(bool draw_border, int buffer_width, bool lettered_top)
 		}
 		else
 		{
-			drawPixel(newPixel(RESET, '`'));
+			printf("`");
 			for(int i = 1; i != buffer_width - 1; i++)
 			{
-				drawPixel(newPixel(RESET, '`'));
+				printf("`");
 			}
-			drawPixel(newPixel(RESET, '`'));
-			drawPixel(newPixel(RESET, '\\'));
+			printf("`");
+			printf("\\");
 		}
 	}
 }
@@ -204,14 +212,14 @@ void drawBorderBottom(bool draw_border, int buffer_width)
 	if(draw_border)
 	{
 		printf("\t");
-		drawPixel(newPixel(RESET, '\\'));
-		drawPixel(newPixel(RESET, '_'));
-		for(int i = 1; i != buffer_width - 1; i++)
+		printf("\\");
+		printf("_");
+		for(int i = 1; i != (buffer_width * (draw_border + draw_border)) - 1; i++)
 		{
-			drawPixel(newPixel(RESET, '_'));
+			printf("_");
 		}
-		drawPixel(newPixel(RESET, '_'));
-		drawPixel(newPixel(RESET, '/'));
+		printf("_");
+		printf("/");
 	}
 	printf("\n");
 }
@@ -221,7 +229,7 @@ void drawBufferContents(VBuffer* buffer, bool draw_border)
 	for(int x = 0; x != buffer->width; x++)
 	{
 		printf("%02d\t", x);
-		if(draw_border){drawPixel(newPixel(RESET, '|'));}
+		if(draw_border){printf("|");}
 		for(int y = 0; y != buffer->width; y++)
 		{
 			// printf("x %d y %d\n", x, y);
@@ -229,13 +237,16 @@ void drawBufferContents(VBuffer* buffer, bool draw_border)
 						buffer->data[getArrayAccessFromPoint((Point){y, x}, buffer->width)]
 					);
 		}
-		if(draw_border){drawPixel(newPixel(RESET, '|'));}
+		setScreenColour(RESET);
+
+		if(draw_border){printf("|");}
 		printf("\n");
 	}
 }
 
 void drawBuffer(VBuffer* buffer, bool draw_border, bool lettered)
 {
+
 	printf("\ndrawBuffer %p\n", (void*)buffer);
 
 	drawBorderTop(draw_border, buffer->width, lettered);

@@ -4,6 +4,7 @@
 #include "PlotsWrapper.h"
 #include "ParseNip.h"
 #include "ScriptLoading.h"
+#include "../FancyWancyDrawDemo.h"
 
 void plotsCommands(ParseNipCommand* command);
 void plotsHelp();
@@ -51,17 +52,18 @@ void executeParsnenipFunctions(ParseNipCommand* command)
 	if(!strcmp(command->instruction_name, "help") || !strcmp(command->instruction_name, "H!"))
 	{
 		help(command);
+		return;
 	}
 	if(!strcmp(command->instruction_name, "about") || !strcmp(command->instruction_name, "ABT"))
 	{
 		about();
+		return;
 	}
 	plotsCommands(command);
 	genericCommands(command);
 
 	printf("\n");
 	resetInputBuffer();
-	resetParsnipCommand(command);
 
 }
 
@@ -113,27 +115,27 @@ void genericCommands(ParseNipCommand* command)
 		printFileContents();
 	}
 }
+#include "Xiaolin_Wu_LineAlgorithm.h"
 
 void plotsCommands(ParseNipCommand* command)
 {
 	if(!strcmp(command->instruction_name, "plot") || !strcmp(command->instruction_name, "^^") || !strcmp(command->instruction_name, "xy"))
 	{
 		printf(" Plotting:\n");
-		plot(stringToInt(command->parameter_buffer[0]), stringToInt(command->parameter_buffer[1]));
+		plot(stringToInt(command->parameter_buffer[0]), stringToInt(command->parameter_buffer[1]), true);
+		return;
 	}
 	if(!strcmp(command->instruction_name, "drawLine") || !strcmp(command->instruction_name, "$$") || !strcmp(command->instruction_name, "xyxy"))
 	{
 		Point a = {stringToInt(command->parameter_buffer[0]), stringToInt(command->parameter_buffer[1])}, b = {stringToInt(command->parameter_buffer[2]), stringToInt(command->parameter_buffer[3])};
 		printf("drawing line from {%d, %d}to {%d, %d}\n", a.x, a.y, b.x, b.y);
-		plotLine(a.x, a.y, b.x, b.y);
+		plotLine(a.x, a.y, b.x, b.y, true);
+		return;
 	}
 	if(!strcmp(command->instruction_name, "clearPlotsBuffer"))
 	{
 		plotsResetBuffer();
-	}
-	if(!strcmp(command->instruction_name, "reDrawBuffer") || !strcmp(command->instruction_name, "!"))
-	{
-		drawPlotsBuffer();
+		return;
 	}
 	
 	if(!strcmp(command->instruction_name, "flipBuffer"))
@@ -154,17 +156,36 @@ void plotsCommands(ParseNipCommand* command)
 			return;
 		}
 		printf("flipping along the %c axis", command->parameter_buffer[0][0]);
-		drawPlotsBuffer();
 		invertPlotsBuffer(command->parameter_buffer[0][0]);
 		drawPlotsBuffer();
+		return;
 	}
 
 	if(!strcmp(command->instruction_name, "writeText"))
 	{
+		if(command->parameters_detected < 4)
+		{
+			setTextColour(RED);
+			printf("Not enough parameters");
+			setTextColour(RESET);
+		}
 		writeStringIntoPlotGraph(	stringToInt(command->parameter_buffer[0]),
 									stringToInt(command->parameter_buffer[1]),
 									command->parameter_buffer[2],
 									(!strcmp(command->parameter_buffer[3], "true")));
+									return;
+	}
+	
+	if(!strcmp(command->instruction_name, "DMO"))
+	{
+		printf("fancy demo:\n");
+		fancyDrawingDemo();
+		return;
+	}
+	if(!strcmp(command->instruction_name, "DL"))
+	{
+		spXiaolinDraw(getPlotsBuffer(), 0, 0, 30, 0);
+		drawPlotsBuffer();
 	}
 }
 #endif

@@ -12,7 +12,7 @@ char* getInputBuffer()
 	return buffer;
 }
 
-void readInputFromUser()
+char* readInputFromUser()
 {
 	// printf("ApPlot \\ ");
 	setTextColour(MAGENTA);
@@ -21,6 +21,7 @@ void readInputFromUser()
 	scanf("%s", getInputBuffer());
 	setTextColour(WHITE);
 	getInputBuffer()[INPUT_BUFFER_LENGTH - 1] = '\0';
+	return getInputBuffer();
 }
 
 void resetString(char* str)

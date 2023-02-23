@@ -4,6 +4,7 @@
         "linkedlistdemo.h": "c",
         "errorsniffing.h": "c",
         "jcommandparser.h": "c",
+        "plotswrapper.h": "c",
         "xiaolin_wu_linealgorithm.h": "c"
     }
 }

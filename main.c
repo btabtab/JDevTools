@@ -25,8 +25,7 @@ bool ApPlotCycle()
 	// resetString(getInputBuffer());
 	ParseNipCommand pncommand;
 	resetParsnipCommand(&pncommand);
-	readInputFromUser();
-	if(readParsenipCommand(&pncommand, getInputBuffer()))
+	if(readParsenipCommand(&pncommand, readInputFromUser()))//"writeText(3,4,hello,true)"))
 	{
 		printParseNipCommand(&pncommand);
 		executeParsnenipFunctions(&pncommand);
@@ -42,6 +41,8 @@ int main(int argc, char *argv[])
 	printf("ApPlot Math graphing Demo\n \
 	Using Parsenip version 0.1\n \
 	for help with commands type 'help'.\n");
+	ArgumentContainer arg_container = (ArgumentContainer){argc, argv};
+	initConsoleDrawing(getPlotsBuffer(), &arg_container);
 	setTextColour(RESET);
 	// printf("\n%s\n%s\n", getInputBuffer(), getInstructionID());
 	resetConsole(0);
@@ -57,23 +58,5 @@ int main(int argc, char *argv[])
 
 void baseDemo(int argc, char *argv[])
 {
-	resetConsole(1);
-	ArgumentContainer arguments = (ArgumentContainer){argc, argv};
-	(*getTerminalSettings()) = parseArgumentsForProgram(arguments);
-	VBuffer buffer;
-	initVbuffer(&buffer, VBUFFER_WIDTH);
-
-	for(int i = 0; i != WHITE << 1; i++)
-	{
-		resetConsole(1);
-		drawLine_naiveAlgorithm(&buffer, (Point){10 - i, i}, (Point){15 + i, 15 + (i << 1)}, newPixel((1 + i) % WHITE, ' '));
-		// drawRectangleFilled(&buffer, (Point){0, 0}, (Point){15, 15}, RED);
-		drawBuffer(&buffer, true, true);
-	}
-
-	printf("\ndone:\n");
-	// fillVbufferWithColours(&buffer[0]);
-	// sortVbufferColours(&buffer[0]);
-	printApplicationArguments((ArgumentContainer){argc, argv});
 	printf("δOSc\n");
 }

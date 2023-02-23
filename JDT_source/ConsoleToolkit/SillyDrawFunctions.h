@@ -92,7 +92,6 @@ void drawLine_naiveAlgorithm(VBuffer* buffer, Point start, Point finish, PixelDa
 
 void drawLineJaive(VBuffer* buffer, Point start, Point finish, int screen_colour)
 {
-
 	/*
 		This tracks the previous point to
 		draw in the missing pixels
