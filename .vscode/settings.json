@@ -3,6 +3,7 @@
         "toolkitconsolecontrolpanel.h": "c",
         "linkedlistdemo.h": "c",
         "errorsniffing.h": "c",
-        "jcommandparser.h": "c"
+        "jcommandparser.h": "c",
+        "xiaolin_wu_linealgorithm.h": "c"
     }
 }
