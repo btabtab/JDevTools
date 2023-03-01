@@ -114,6 +114,10 @@ void genericCommands(ParseNipCommand* command)
 		loadScriptFile(command->parameter_buffer[0]);
 		printFileContents();
 	}
+	if(!strcmp(command->instruction_name, "system"))
+	{
+		system(command->parameter_buffer[0]);
+	}
 }
 #include "Xiaolin_Wu_LineAlgorithm.h"
 

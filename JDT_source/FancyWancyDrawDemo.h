@@ -6,11 +6,9 @@
 
 #include "ConsoleToolkit/ShapesDrawing.h"
 
-void fancyDrawingDemo()
+void demoSetup()
 {
-	// printf("fancyDrawingDemo");
-	// writeStringIntoPlotGraph(1,1,"hello world!", false);
-
+	
 	for(int ix = 0, iy = getPlotsBuffer()->width - 1; ix != getPlotsBuffer()->width; ix++, iy--)
 	{
 		// if(ix != getPlotsBuffer()->width - 1)
@@ -35,6 +33,12 @@ void fancyDrawingDemo()
 
 	(*currentPixelData()) = newPixel(GREEN, '@');
 	drawTriangle(newPoint(10, 20), newPoint(20, 20), newPoint(20, 10));
+}
+
+void fancyDrawingDemo()
+{
+	// printf("fancyDrawingDemo");
+	// writeStringIntoPlotGraph(1,1,"hello world!", false);
 
 	drawPlotsBuffer();
 }

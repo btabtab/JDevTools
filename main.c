@@ -4,18 +4,15 @@
 #include "JDT_source/ConsoleToolkit/ToolkitConsoleControlPanel.h"
 #include "JDT_source/ConsoleToolkit/ConsoleDraw.h"
 #include "JDT_source/DemoSRCcode/LinkedListDemo.h"
-
 #include "JDT_source/DemoSRCcode/StarDemo.h"
-
 #include "JDT_source/ConsoleToolkit/SillyDrawFunctions.h"
-
 #include "JDT_source/ErrorSniffing.h"
-
 #include "JDT_source/DemoSRCcode/RainDemo.h"
-
 #include "JDT_source/ConsoleToolkit/ParseNip.h"
-
 #include "JDT_source/ConsoleToolkit/ProgramCommands.h"
+
+#include "JDT_source/JDRInterfacing.h"
+#include "JDevRendering/JDevRaycaster.h"
 
 void baseDemo(int argc, char *argv[]);
 
